@@ -541,7 +541,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 91230607}
         m_TargetAssemblyTypeName: MenuActions, Assembly-CSharp
-        m_MethodName: IniciaJogo
+        m_MethodName: IniciaConfig
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
