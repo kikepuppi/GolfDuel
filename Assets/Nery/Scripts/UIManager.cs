@@ -6,9 +6,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("Inputs")]
     public TMP_InputField inputNomeP1;
-    public TMP_InputField inputNickP1;
     public TMP_InputField inputNomeP2;
-    public TMP_InputField inputNickP2;
 
     [Header("Botões")]
     public Button botaoProntoP1;
@@ -26,24 +24,20 @@ public class UIManager : MonoBehaviour
         botaoProntoP2.interactable = false;
 
         inputNomeP1.onValueChanged.AddListener(delegate { ValidarP1(); });
-        inputNickP1.onValueChanged.AddListener(delegate { ValidarP1(); });
 
         inputNomeP2.onValueChanged.AddListener(delegate { ValidarP2(); });
-        inputNickP2.onValueChanged.AddListener(delegate { ValidarP2(); });
     }
 
     void ValidarP1()
     {
-        bool valido = !string.IsNullOrWhiteSpace(inputNomeP1.text) &&
-                      !string.IsNullOrWhiteSpace(inputNickP1.text);
+        bool valido = !string.IsNullOrWhiteSpace(inputNomeP1.text);
 
         botaoProntoP1.interactable = valido;
     }
 
     void ValidarP2()
     {
-        bool valido = !string.IsNullOrWhiteSpace(inputNomeP2.text) &&
-                      !string.IsNullOrWhiteSpace(inputNickP2.text);
+        bool valido = !string.IsNullOrWhiteSpace(inputNomeP2.text);
 
         botaoProntoP2.interactable = valido;
     }
@@ -56,7 +50,6 @@ public class UIManager : MonoBehaviour
 
         // trava inputs
         inputNomeP1.interactable = false;
-        inputNickP1.interactable = false;
 
         // muda visual do botão
         AlterarVisual(botaoProntoP1, Color.gray);
@@ -71,7 +64,6 @@ public class UIManager : MonoBehaviour
         p2Pronto = true;
 
         inputNomeP2.interactable = false;
-        inputNickP2.interactable = false;
 
         AlterarVisual(botaoProntoP2, Color.gray);
 
