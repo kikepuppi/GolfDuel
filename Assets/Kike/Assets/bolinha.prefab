@@ -432,7 +432,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &5356746801136146812
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a3ec180c36dd5a74fbd7ccd9be56a455, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
