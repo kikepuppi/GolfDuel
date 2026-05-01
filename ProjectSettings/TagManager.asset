@@ -5,14 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ball
+  - FoxBallStart
+  - Cow
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
-  - 
+  - FobiddenZone
   - 
   - 
   - 

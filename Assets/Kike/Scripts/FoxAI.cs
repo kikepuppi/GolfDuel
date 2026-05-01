@@ -32,6 +32,21 @@ public class FoxAI : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+
+        // se não foi setado manualmente, busca automaticamente
+        if (targetPoint == null)
+        {
+            GameObject obj = GameObject.FindGameObjectWithTag("FoxBallStart");
+
+            if (obj != null)
+            {
+                targetPoint = obj.transform;
+            }
+            else
+            {
+                Debug.LogWarning("FoxBallStart não encontrado na cena!");
+            }
+        }
     }
 
     void Update()
