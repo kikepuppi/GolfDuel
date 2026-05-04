@@ -118,18 +118,11 @@ public class FoxAI : MonoBehaviour
         UpdateBallPosition();
     }
 
-    public void TryCatchBall(GameObject ball)
-    {
-        if (ball.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
-        {
-            StartCoroutine(PickBallWithDelay(ball));
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log(col.gameObject.name);
-        if (col.gameObject.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
+
+        if (col.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
         {
             StartCoroutine(PickBallWithDelay(col.gameObject));
         }
@@ -143,10 +136,11 @@ public class FoxAI : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        // desliga trail
+        Collider2D ballCol = ball.GetComponent<Collider2D>();
+        if (ballCol != null) ballCol.enabled = false;
+
         TrailRenderer trail = ball.GetComponent<TrailRenderer>();
-        if (trail != null)
-            trail.emitting = false;
+        if (trail != null) trail.emitting = false;
 
         yield return new WaitForSeconds(biteDelay);
 
@@ -166,10 +160,11 @@ public class FoxAI : MonoBehaviour
         Rigidbody2D rb = carriedBall.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
 
-        // reativa trail
+        Collider2D ballCol = carriedBall.GetComponent<Collider2D>();
+        if (ballCol != null) ballCol.enabled = true;
+
         TrailRenderer trail = carriedBall.GetComponent<TrailRenderer>();
-        if (trail != null)
-            trail.emitting = true;
+        if (trail != null) trail.emitting = true;
 
         carriedBall = null;
         isCarrying = false;

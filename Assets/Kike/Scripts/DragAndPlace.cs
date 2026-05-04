@@ -10,8 +10,17 @@ public class DragAndPlace : MonoBehaviour
     GameObject currentDrag;
     SpriteRenderer currentRenderer;
     ForbiddenZone currentZone;
+    Collider2D currentZoneCol;
 
     List<ForbiddenZone> allZones = new List<ForbiddenZone>();
+
+    ContactFilter2D overlapFilter;
+
+    void Awake()
+    {
+        overlapFilter = ContactFilter2D.noFilter;
+        overlapFilter.useTriggers = true;
+    }
 
     void Update()
     {
@@ -21,11 +30,9 @@ public class DragAndPlace : MonoBehaviour
             mouse.z = 0;
             currentDrag.transform.position = mouse;
 
-            // MOSTRAR zonas existentes
             foreach (var z in allZones)
                 z.Show(true);
 
-            // MOSTRAR zona do objeto atual
             if (currentZone != null)
                 currentZone.Show(true);
 
@@ -33,23 +40,17 @@ public class DragAndPlace : MonoBehaviour
 
             bool overlaps = false;
 
-            if (currentZone != null)
+            if (currentZoneCol != null)
             {
                 Physics2D.SyncTransforms();
 
-                var myCol = currentZone.GetComponent<Collider2D>();
-
                 List<Collider2D> results = new List<Collider2D>();
-                myCol.Overlap(results);
+                currentZoneCol.Overlap(overlapFilter, results);
 
                 foreach (var h in results)
                 {
                     if (h == null) continue;
-
-                    // ignora a própria zona
                     if (h.transform == currentZone.transform) continue;
-
-                    // ignora qualquer coisa do mesmo objeto (fox atual)
                     if (h.transform.root == currentZone.transform.root) continue;
 
                     if (h.GetComponent<ForbiddenZone>() != null)
@@ -68,7 +69,6 @@ public class DragAndPlace : MonoBehaviour
             {
                 if (isValid)
                 {
-                    // vaca centraliza no X
                     if (currentDrag.CompareTag("Cow"))
                     {
                         Vector3 pos = currentDrag.transform.position;
@@ -76,25 +76,23 @@ public class DragAndPlace : MonoBehaviour
                         currentDrag.transform.position = pos;
                     }
 
-                    // FIXAR ZONA
                     currentZone.transform.SetParent(null);
+                    currentZone.Lock();
                     allZones.Add(currentZone);
 
-                    // parar drag
                     var state = currentDrag.GetComponent<ObstacleState>();
                     if (state != null) state.SetDragging(false);
 
-                    // esconder zonas existentes
                     foreach (var z in allZones)
                         z.Show(false);
 
                     currentDrag = null;
                     currentZone = null;
+                    currentZoneCol = null;
                 }
             }
         }
 
-        // DEBUG
         if (Input.GetKeyDown(KeyCode.C)) StartDrag(cowPrefab);
         if (Input.GetKeyDown(KeyCode.F)) StartDrag(foxPrefab);
     }
@@ -108,10 +106,11 @@ public class DragAndPlace : MonoBehaviour
         currentRenderer = currentDrag.GetComponent<SpriteRenderer>();
 
         currentZone = currentDrag.GetComponentInChildren<ForbiddenZone>();
-
-        // garantir que começa visível durante drag
         if (currentZone != null)
+        {
+            currentZoneCol = currentZone.GetComponent<Collider2D>();
             currentZone.Show(true);
+        }
 
         var state = currentDrag.GetComponent<ObstacleState>();
         if (state != null) state.SetDragging(true);

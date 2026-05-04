@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1528642523896726661}
   - component: {fileID: 7803936567402742161}
   - component: {fileID: 4842620285653166161}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: fox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -184,7 +184,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.18, y: 0.21}
+  m_Size: {x: 0.18, y: 0.22}
   m_EdgeRadius: 0
 --- !u!50 &7803936567402742161
 Rigidbody2D:
@@ -234,7 +234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4368752736051070779}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MouthPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,6 @@ GameObject:
   - component: {fileID: 1393276424646367986}
   - component: {fileID: 5058514488236796631}
   - component: {fileID: 4443524342958457644}
-  - component: {fileID: 4444140421320781084}
   m_Layer: 6
   m_Name: FoxZone
   m_TagString: Untagged
@@ -339,19 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4682f0e07e23744f87cdd90e8d9febc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForbiddenZone
---- !u!114 &4444140421320781084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5354053656784716302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ff915a591f8034db4d4f769ea662b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  foxAI: {fileID: 4450129480004449944}
 --- !u!1 &8334101277536562565
 GameObject:
   m_ObjectHideFlags: 0
