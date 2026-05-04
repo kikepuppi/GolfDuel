@@ -5,7 +5,7 @@ public class DragAndPlace : MonoBehaviour
 {
     public GameObject cowPrefab;
     public GameObject foxPrefab;
-    public BoxCollider2D playableArea;
+    public SpriteRenderer playableArea;
 
     GameObject currentDrag;
     SpriteRenderer currentRenderer;
@@ -29,7 +29,7 @@ public class DragAndPlace : MonoBehaviour
             if (currentZone != null)
                 currentZone.Show(true);
 
-            bool isInside = playableArea.OverlapPoint(currentDrag.transform.position);
+            bool isInside = playableArea.bounds.Contains(currentDrag.transform.position);
 
             bool overlaps = false;
 

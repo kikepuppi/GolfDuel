@@ -118,8 +118,17 @@ public class FoxAI : MonoBehaviour
         UpdateBallPosition();
     }
 
+    public void TryCatchBall(GameObject ball)
+    {
+        if (ball.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
+        {
+            StartCoroutine(PickBallWithDelay(ball));
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.name);
         if (col.gameObject.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
         {
             StartCoroutine(PickBallWithDelay(col.gameObject));
