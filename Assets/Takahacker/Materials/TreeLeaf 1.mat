@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TreeLeaf 1
+  m_Shader: {fileID: 4800000, guid: 68c1a2cb7640a46ddb14cb3a98825fbf, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: _Threshold3
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AccentTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AccentTex2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BorderTex:
+        m_Texture: {fileID: 2800000, guid: bafa1e85fce06488a85895192f1912e1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassTex:
+        m_Texture: {fileID: 2800000, guid: bafa1e85fce06488a85895192f1912e1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AccentChance: 0
+    - _AccentChance2: 0
+    - _AccentScaleMax: 0.1
+    - _AccentScaleMax2: 0.1
+    - _AccentScaleMin: 0.1
+    - _AccentScaleMin2: 0.1
+    - _BladeScale: 1.47
+    - _BladeScaleMin: 1.98
+    - _BorderLeafSize: 3
+    - _BorderScale: 77.1
+    - _BorderWindMult: 5
+    - _BotCircleX: 0.491
+    - _BotCircleY: 0.65
+    - _BotRadius: 0.65
+    - _ChunkScale: 14.3
+    - _Density: 47.1
+    - _EnableExternalAlpha: 0
+    - _FoliageBlend: 1
+    - _GrassChance: 0
+    - _SpriteDarken: 0.821
+    - _Threshold2: 0.282
+    - _Threshold3: 0.632
+    - _TopCircleX: 0.585
+    - _TopCircleY: 0.35
+    - _TopRadius: 0.65
+    - _WindSpeed: 1.2
+    - _WindStrength: 0.08
+    - _ZWrite: 0
+    m_Colors:
+    - _AccentTint: {r: 0.013375044, g: 0, b: 1, a: 1}
+    - _AccentTint2: {r: 1, g: 0, b: 0, a: 1}
+    - _BotColor1: {r: 0.64830405, g: 1, b: 0.15566039, a: 1}
+    - _BotColor2: {r: 0.6431373, g: 1, b: 0.15294118, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.28627452, g: 0.50980395, b: 0.003921569, a: 1}
+    - _Color2: {r: 0.15097441, g: 0.3490566, b: 0.13995194, a: 1}
+    - _Color3: {r: 0.41568628, g: 0.65882355, b: 0.10980392, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TopColor1: {r: 0.101960786, g: 0.39607844, b: 0.05490196, a: 1}
+    - _TopColor2: {r: 0.101960786, g: 0.39607844, b: 0.05490196, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
