@@ -14,11 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialData
   talkScript:
   - text: "Em GolfDuel, voc\xEA enfrenta outro jogador em partidas de golfe 1v1."
+    mediaType: 1
+    image: {fileID: -3335439430522990117, guid: ee83f6131dd908d69a50eb348797a3d4, type: 3}
+    video: {fileID: 0}
+    animationTrigger: 
   - text: "O objetivo \xE9 simples: terminar todas as rodadas com o menor n\xFAmero
       de tacadas poss\xEDvel."
+    mediaType: 0
+    image: {fileID: 0}
+    video: {fileID: 0}
+    animationTrigger: 
   - text: "A cada rodada, voc\xEA pode escolher entre uma sele\xE7\xE3o de Buffs
       / Obst\xE1culos para utilizar ou atrapalhar seu oponente."
+    mediaType: 0
+    image: {fileID: 0}
+    video: {fileID: 0}
+    animationTrigger: 
   - text: "Depois da fase de sele\xE7\xE3o, ambos os jogadores disputam no circuito
       tentando complet\xE1-lo no menor n\xFAmero de tacadas."
+    mediaType: 0
+    image: {fileID: 0}
+    video: {fileID: 0}
+    animationTrigger: 
   - text: "Para fazer uma tacada pressione o cursor na bola e aponte a dire\xE7\xE3o
       e intensidade de seu movimento."
+    mediaType: 0
+    image: {fileID: 0}
+    video: {fileID: 0}
+    animationTrigger: 

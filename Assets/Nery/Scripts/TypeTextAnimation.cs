@@ -10,14 +10,11 @@ public class TypeTextAnimation : MonoBehaviour
 
     public bool isTyping { get; private set; } = false;
 
-    // Remove o Start() — quem inicia é o TutorialSystem
-    
     public void StartTyping() {
         StopAllCoroutines();
         StartCoroutine(TypeText());
     }
 
-    // Pula direto para o fim da animação
     public void SkipTyping() {
         StopAllCoroutines();
         textObject.text = fullText;
