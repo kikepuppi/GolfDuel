@@ -1,0 +1,495 @@
+================================================================================
+DYLEARN 3D PIXEL ART GRASS DEMO - COMPLETE FILE EXTRACTION
+Repository: https://github.com/DylearnDev/Dylearn-3D-Pixel-Art-Grass-Demo
+================================================================================
+
+1. README CONTENT
+================================================================================
+
+# Dylearn 3D Pixel Art Grass Demo
+
+Open-source asset collection featuring stylized pixel-art grass for games and 
+interactive applications.
+
+## Project Overview
+- Includes 3D pixel-art grass system with noise-based heterogeneity
+- Features wind animation and character-reactive displacement
+- Hybrid toon shading approach
+- Both code and art assets included
+
+## Licensing
+**Code (MIT License):**
+- Scripts and shaders can be freely used, modified, and distributed
+- Minimal constraints for commercial and personal projects
+
+**Art Assets (CC BY 4.0):**
+- Models and textures require attribution
+- Commercial use permitted with proper credit (e.g., "Grass assets by Dylearn")
+
+**Branding (All Rights Reserved):**
+- Waterfowl logo cannot be reused without permission
+
+## Language Composition
+- GDShader: 82.4%
+- GDScript: 17.6%
+
+
+2. FOLDER STRUCTURE
+================================================================================
+
+Dylearn-3D-Pixel-Art-Grass-Demo/
+├── .godot/                    # Godot engine configuration
+├── .editorconfig              # Editor configuration
+├── .gitattributes             # Git attributes
+├── Models/                    # 3D mesh assets
+├── Scenes/                    # Godot scene files
+├── Scripts/                   # GDScript files
+│   ├── CharacterManager.gd
+│   ├── LightDirection.gd
+│   ├── RandomPositionCharacter.gd
+│   └── ShaderGlobals.gd
+├── Shaders/                   # GDShader files
+│   ├── Grass.gdshader
+│   ├── Floor.gdshader
+│   ├── Outline.gdshader
+│   ├── ToonShader.gdshader
+│   └── clouds.gdshaderinc
+├── Textures and Materials/    # Visual resources
+├── LICENSE.txt                # MIT & CC BY 4.0 Licenses
+├── README.md                  # Project documentation
+└── project.godot              # Godot project configuration
+
+
+3. SHADER FILES
+================================================================================
+
+FILE: Shaders/Grass.gdshader (16,716 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+A comprehensive spatial shader for rendering realistic, animated grass with 
+multiple visual and interactive features. Designed for Godot Engine.
+
+KEY FEATURES:
+- Multiple albedo layers with noise-based blending for varied appearance
+- Accent grass variants (customizable frequency, height, scale)
+- Support for 64 character positions for dynamic grass displacement
+- World-space wind sway using noise textures with directional control
+- View-space oscillation for gentle swaying
+- Character-based displacement that bends grass when players approach
+- Quantized framerate option for performance optimization
+- Billboard quads that face the camera
+- Fake perspective through UV distortion
+- Hybrid toon shading with gradient lighting transitions
+- Cloud shadow integration
+- Location-based seeding for consistent, non-repeating animation
+- Alpha scissor for clean edges
+- Debug visualization modes for wind and displacement
+
+RENDERING APPROACH:
+- Uses rotation matrices for world-space, view-space, and character displacement
+- Combines multiple noise textures for animation
+- Efficient sampling for performance
+- Supports up to 64 character positions for grass deformation
+
+USE CASES:
+- Game environments with interactive grass
+- Real-time grass deformation near characters
+- Stylized pixel-art game worlds
+
+
+FILE: Shaders/Floor.gdshader (2,478 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+A spatial shader for Godot 4 creating stylized toon rendering with terrain 
+color variation.
+
+KEY FEATURES:
+- Three albedo layers blended by noise textures
+- Samples albedo2_noise and albedo3_noise at world-space coordinates
+- Threshold-based color selection
+- Toon shading via discrete lighting steps (1-8 cuts)
+- Wrap parameter for softening shadows
+- Directional light integration with cloud shadowing
+- Uses world coordinates for terrain color variation
+- Steepness uniform for controlling lighting contrast
+- Editor-friendly hint_range attributes for parameter control
+
+RENDERING:
+- Light function implements toon shading
+- Dot product between surface normal and light direction
+- Quantized result into discrete steps for cel-shading
+- Cloud noise modulation via included shader file
+
+ADAPTED FROM:
+Community Godot shader, modified with multi-color terrain support
+
+
+FILE: Shaders/Outline.gdshader (4,680 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+A post-processing shader creating cel-shading or cartoon-like effects through 
+edge detection and stylization.
+
+KEY FEATURES:
+- Edge detection via depth comparison (shadow edges)
+- Normal map difference analysis (highlight edges)
+- Independent shadow and highlight toggles
+- Customizable strength (0.0-1.0 range)
+- Custom shadow and highlight colors
+- Samples depth and normal textures at neighboring screen positions
+- Significant differences trigger color blending
+
+HOW IT WORKS:
+- Detects edges by comparing adjacent pixel depths
+- Analyzes surface normal transitions
+- Blends original color with shadow or highlight color
+- Creates stylized outlines
+
+CREDITS:
+- Created by Leo Peltola
+- Inspired by Three.js pixel art post-processing
+- Depth calculation credited to GodotShaders.com contributors
+
+STYLE APPLICATIONS:
+- Comic book effects
+- Cel-shading
+- Retro pixel-art styles
+
+
+FILE: Shaders/ToonShader.gdshader (1,468 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+A spatial shader for Godot 4 creating cartoon-style rendering with 
+customizable lighting effects.
+
+KEY FEATURES:
+- Albedo texture mapping with color tinting
+- Adjustable toon shading with 1-8 discrete color cuts
+- Wrap parameter (controls lighting wrap-around: -2 to 2)
+- Steepness parameter (controls transition sharpness: 1-8)
+- Cloud shadow integration
+- Diffuse lighting via dot product (normal · light direction)
+- Stepping function for characteristic "banded" toon appearance
+- Directional light modulation by cloud noise
+
+PARAMETERS:
+- cuts: Number of color bands (1-8)
+- wrap: Lighting wrap-around adjustment
+- steepness: Transition sharpness control
+
+AUTHOR: Dylearn (MIT License)
+Adapted from Godot shader community contribution
+
+
+FILE: Shaders/clouds.gdshaderinc (2,497 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+A shader include file (.gdshaderinc) implementing cloud shadow simulation.
+Provides reusable functions for cloud noise and shadow effects.
+
+COMPONENTS:
+
+1. Uniform Declarations:
+   - Cloud noise texture
+   - Cloud scale, speed, direction parameters
+   - Contrast, threshold, and divergence angle settings
+   - Cloud world Y position
+
+2. rotate_vec2() Function:
+   - Helper function for directional rotation
+   - Used for anisotropic cloud movement
+
+3. get_cloud_noise() Function:
+   - Projects world positions onto cloud plane
+   - Samples dual noise textures with diverging directions
+   - Avoids visual repetition through dual-texture sampling
+   - Applies contrast and threshold adjustments
+   - Returns light value representing shadow intensity
+
+USAGE:
+- Included by other shaders (Floor.gdshader, ToonShader.gdshader)
+- Modulates lighting with atmospheric shadow effects
+- Supports dynamic cloud movement and properties
+
+AUTHOR: Dylearn (MIT License)
+
+
+4. GDSCRIPT FILES
+================================================================================
+
+FILE: Scripts/CharacterManager.gd (1,385 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+SUMMARY:
+Manages character position tracking for grass shader displacement effects.
+Extends Node and uses @tool directive for editor functionality.
+
+PURPOSE:
+"Takes all locations of characters and passes them to shader for grass 
+displacement"
+
+KEY FEATURES:
+- Stores up to 64 character positions as Vector4 values
+- Vector4 format: (x, y, z, displacement_size)
+- Queries nodes in "characters" group each frame
+- Updates shader parameters at configurable framerate (default 10 FPS)
+- Resets position array each update cycle with hidden location value
+
+PROCESS FLOW:
+1. _process() function accumulates delta time
+2. Triggers updates when grass frametime threshold exceeded
+3. Retrieves character data from "characters" group
+4. Extracts global positions and grass displacement sizes
+5. Transmits data to grass material shader for real-time displacement
+
+PRACTICAL USE:
+- Synchronizes character movement with environmental shader effects
+- Enables interactive grass deformation near moving characters
+- Optimized update frequency to balance quality and performance
+
+
+FILE: Scripts/LightDirection.gd (579 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+LICENSE: MIT
+AUTHOR: Dylearn
+
+PURPOSE: Pass light direction to global shaders
+
+```gdscript
+# MIT License. 
+# Made by Dylearn
+
+# Pass light direction to global shaders
+
+@tool
+extends DirectionalLight3D
+
+@onready var directional_light: DirectionalLight3D = $"."
+
+# Function to send directional light information to the shader
+func _process(_delta):
+	if directional_light:
+		# Get the world direction of the directional light
+		var light_direction = directional_light.global_transform.basis.z.normalized()
+		#print("light dir", light_direction)
+		
+		# Pass the light direction to the shader
+		RenderingServer.global_shader_parameter_set("light_direction", light_direction)
+```
+
+FUNCTIONALITY:
+- Operates as a @tool script in Godot editor
+- Extracts world direction of directional light
+- Transmits direction to shaders via RenderingServer
+- Allows dynamic shader response to light positioning
+- No manual shader updates required
+
+
+FILE: Scripts/RandomPositionCharacter.gd (2,006 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+LICENSE: MIT
+AUTHOR: Dylearn
+
+PURPOSE: Random NPC movement demonstration with grass displacement for 
+characters of different sizes
+
+```gdscript
+# MIT License. 
+# Made by Dylearn
+
+# Script for random NPC movement to demonstrate 
+# grass displacement on characters of different sizes
+
+@tool
+extends CharacterBody3D
+
+@export var camera: Camera3D
+@export var speed: float = 6.0
+@export var acceleration: float = 20.0
+@export var wait_time: float = 0.1
+@export var grass_displacement_size: float = 0.5
+
+var target_position: Vector3
+var waiting: bool = false
+var wait_timer: float = 0.0
+
+func _ready():
+	set_physics_process(true)
+	pick_new_target()
+
+func _physics_process(delta):
+	if waiting:
+		wait_timer -= delta
+		if wait_timer <= 0.0:
+			waiting = false
+			pick_new_target()
+		return
+	
+	move_towards_target(delta)
+
+func move_towards_target(delta):
+	var to_target = target_position - global_position
+	to_target.y = 0.0
+	
+	var distance = to_target.length()
+	if distance < 0.1:
+		velocity = Vector3.ZERO
+		waiting = true
+		wait_timer = wait_time
+		return
+	
+	var move_dir = to_target.normalized()
+	
+	# Slow on arrival
+	var slow_radius = 2.0
+	var speed_scale = clamp(distance / slow_radius, 0.0, 1.0)
+	
+	var target_velocity = move_dir * speed * speed_scale
+	velocity = velocity.move_toward(target_velocity, acceleration * delta)
+	
+	move_and_slide()
+
+func pick_new_target():
+	target_position = get_random_visible_ground_point()
+
+func get_random_visible_ground_point() -> Vector3:
+	var viewport = get_viewport()
+	var screen_size = viewport.get_visible_rect().size
+	
+	for i in range(10):
+		var screen_pos = Vector2(
+			randf() * screen_size.x,
+			lerp(screen_size.y * 0.5, screen_size.y, randf())
+		)
+		
+		var ray_origin = camera.project_ray_origin(screen_pos)
+		var ray_dir = camera.project_ray_normal(screen_pos)
+		
+		if abs(ray_dir.y) > 0.001:
+			var t = -ray_origin.y / ray_dir.y
+			if t > 0.0:
+				var point = ray_origin + ray_dir * t
+				point.y = 0.0
+				return point
+	
+	return global_position
+```
+
+KEY FEATURES:
+- Random pathfinding with smooth acceleration/deceleration
+- Ray-casting to determine ground plane intersection
+- Configurable character sizes via grass_displacement_size parameter
+- Pause intervals between movements
+- Speed scales based on distance to target (slower on arrival)
+- Samples from visible screen area to select random targets
+- CharacterBody3D with physics-based movement
+
+EXPORTED PROPERTIES:
+- camera: Reference to Camera3D for ray-casting
+- speed: Movement speed (default 6.0)
+- acceleration: Acceleration factor (default 20.0)
+- wait_time: Pause duration (default 0.1)
+- grass_displacement_size: Grass deformation radius (default 0.5)
+
+
+FILE: Scripts/ShaderGlobals.gd (1,971 bytes)
+────────────────────────────────────────────────────────────────────────────
+
+LICENSE: MIT
+AUTHOR: Dylearn
+
+PURPOSE: Cloud shader parameter manager for real-time tweaking
+
+FUNCTIONALITY:
+Manages eight cloud-related shader parameters with editor-friendly interface:
+- cloud_contrast
+- cloud_direction
+- cloud_diverge_angle
+- cloud_scale
+- cloud_speed
+- cloud_shadow_min
+- cloud_threshold
+- cloud_world_y
+
+KEY MECHANISM:
+- Each exported variable includes a custom setter
+- Setter automatically syncs changes to rendering engine
+- Uses RenderingServer.global_shader_parameter_set() for updates
+- Changes propagate without manual refresh or recompilation
+
+EDITOR INTEGRATION:
+- _ready() function retrieves existing shader parameter values
+- Inspector displays current settings on scene load
+- Enables real-time parameter tweaking in editor
+- Streamlined workflow for shader adjustments
+
+IMPLEMENTATION APPROACH:
+- Tool script for editor functionality
+- Direct rendering server communication
+- Automatic synchronization between inspector and shader
+
+
+5. TECHNICAL SUMMARY
+================================================================================
+
+RENDERING PIPELINE:
+1. Grass.gdshader handles main grass rendering with:
+   - Character displacement from CharacterManager.gd positions
+   - Wind animation from ShaderGlobals.gd parameters
+   - Lighting from LightDirection.gd
+   - Cloud shadows from clouds.gdshaderinc
+
+2. Floor.gdshader provides terrain rendering with:
+   - Multi-layer albedo blending
+   - Toon shading with cloud shadows
+
+3. ToonShader.gdshader offers alternative toon rendering
+
+4. Outline.gdshader applies post-processing edge detection
+
+SCRIPT RESPONSIBILITIES:
+- CharacterManager.gd: Character position tracking
+- LightDirection.gd: Light direction broadcasting
+- RandomPositionCharacter.gd: NPC movement demonstration
+- ShaderGlobals.gd: Cloud parameter management
+
+INTERACTION FLOW:
+1. DirectionalLight3D passes direction via LightDirection.gd
+2. Characters in "characters" group tracked by CharacterManager.gd
+3. Character positions sent to Grass.gdshader as Vector4 array
+4. ShaderGlobals.gd manages cloud parameters
+5. All shaders access cloud effects via clouds.gdshaderinc include
+
+PERFORMANCE OPTIMIZATIONS:
+- Configurable update framerate for character displacement
+- Quantized framerate option in grass shader
+- Efficient noise sampling
+- Uses include files to avoid code duplication
+
+
+6. LICENSE INFORMATION
+================================================================================
+
+Code (MIT License):
+- All .gd and .gdshader files
+- Full freedom to use, modify, distribute
+- Minimal constraints
+
+Art Assets (CC BY 4.0):
+- Models and textures
+- Commercial use allowed with attribution
+
+Branding (All Rights Reserved):
+- Waterfowl logo
+- Cannot be reused without explicit permission
+
+================================================================================
+END OF EXTRACTION
+================================================================================
