@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: ee83f6131dd908d69a50eb348797a3d4
+guid: 88a01252e864b7dac87d2142c69403f1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3335439430522990117
-    second: p1_p2_0
+      213: -4842582042960490510
+    second: anim3_0
+  - first:
+      213: 973460963389427498
+    second: anim3_1
+  - first:
+      213: -3372553263236925159
+    second: anim3_2
+  - first:
+      213: -5265322104552662096
+    second: anim3_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: p1_p2_0
+      name: anim3_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 577
-        height: 200
+        x: 444
+        y: 76
+        width: 13
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd198d5828326b1d0800000000000000
-      internalID: -3335439430522990117
+      spriteID: 2ff87adf941bbccb0800000000000000
+      internalID: -4842582042960490510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim3_1
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 0
+        width: 146
+        height: 211
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2f498da69d628d00800000000000000
+      internalID: 973460963389427498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim3_2
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 52
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 919bda6fca84231d0800000000000000
+      internalID: -3372553263236925159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anim3_3
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 28
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bb502a5171dde6b0800000000000000
+      internalID: -5265322104552662096
       vertices: []
       indices: 
       edges: []
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      p1_p2_0: -3335439430522990117
+      anim3_0: -4842582042960490510
+      anim3_1: 973460963389427498
+      anim3_2: -3372553263236925159
+      anim3_3: -5265322104552662096
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
