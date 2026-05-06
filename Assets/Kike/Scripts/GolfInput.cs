@@ -3,6 +3,11 @@ using UnityEngine;
 public class GolfInput : MonoBehaviour
 {
     Rigidbody2D rb;
+    Collider2D col;
+
+    [Header("Player")]
+    public int playerIndex; // 0 = P1, 1 = P2
+    public Camera playerCamera;
 
     [Header("Seta")]
     public Transform arrow;
@@ -10,27 +15,59 @@ public class GolfInput : MonoBehaviour
     public Transform ponta;
     public SpriteRenderer pontaRenderer;
 
-    [Header("Força")]
+    [Header("Forï¿½a")]
     public float maxForce = 10f;
     public float maxDragDistance = 2.5f;
 
+    public bool IsFinished { get; private set; }
+
     Vector2 startMousePos;
     bool isDragging = false;
+    bool shotInProgress = false;
 
     float[] pontaY = new float[] { 1.4f, 2.1f, 2.8f, 3.5f, 4.2f };
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         arrow.gameObject.SetActive(false);
+    }
+
+    public void SetFinished()
+    {
+        IsFinished = true;
+        isDragging = false;
+        shotInProgress = false;
+        if (arrow != null) arrow.gameObject.SetActive(false);
     }
 
     void Update()
     {
+        if (IsFinished) return;
+
+        // Disable collider during placement so obstacles don't interact with the ball
+        if (col != null)
+        {
+            bool placing = GameManager.Instance != null &&
+                (GameManager.Instance.CurrentPhase == GamePhase.P1ObstacleSelection ||
+                 GameManager.Instance.CurrentPhase == GamePhase.P2ObstacleSelection);
+            col.enabled = !placing;
+        }
+
         if (rb.linearVelocity.magnitude > 0.05f)
             return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (shotInProgress)
+        {
+            shotInProgress = false;
+            GameManager.Instance?.OnBallStopped(playerIndex);
+            return;
+        }
+
+        if (!IsMyTurn()) return;
+
+        if (Input.GetMouseButtonDown(0) && MouseIsOverBall())
         {
             isDragging = true;
             startMousePos = GetMouseWorldPos();
@@ -60,13 +97,28 @@ public class GolfInput : MonoBehaviour
             rb.AddForce(force, ForceMode2D.Impulse);
 
             isDragging = false;
+            shotInProgress = true;
             arrow.gameObject.SetActive(false);
         }
     }
 
+    bool IsMyTurn()
+    {
+        if (GameManager.Instance == null) return true;
+        var phase = GameManager.Instance.CurrentPhase;
+        return (playerIndex == 0 && phase == GamePhase.P1Turn)
+            || (playerIndex == 1 && phase == GamePhase.P2Turn);
+    }
+
     Vector2 GetMouseWorldPos()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Camera cam = playerCamera != null ? playerCamera : Camera.main;
+        return cam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    bool MouseIsOverBall()
+    {
+        return col != null && col.OverlapPoint(GetMouseWorldPos());
     }
 
     void UpdateArrow(Vector2 direction, float distance)
@@ -106,7 +158,7 @@ public class GolfInput : MonoBehaviour
 
                 foreach (var r in renderers)
                 {
-                    // se for borda ? mantém preta
+                    // se for borda ? mantï¿½m preta
                     if (r.gameObject.name.ToLower().Contains("borda"))
                     {
                         r.color = Color.black;
