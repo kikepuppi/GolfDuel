@@ -3,143 +3,92 @@ using System.Collections;
 
 public class FoxAI : MonoBehaviour
 {
-    [Header("Targets")]
-    public Transform targetPoint;
-    public Transform mouthPoint;
-
     [Header("Movement")]
-    public float speed = 2f;
+    public float speed = 4f;
+    public float carrySpeed = 7f;
+    public float exitSpeed = 5f;
 
-    [Header("Offsets")]
+    [Header("Settings")]
+    public float dropDistance = 4f;
+    public float biteDelay = 0.5f;
+    public float pickupDelayAfterDrop = 1f;
+    public float exitDuration = 3f;
+
+    [Header("Ball Offsets")]
+    public Transform mouthPoint;
     public Vector2 offsetSide = new Vector2(0.2f, 0.1f);
     public Vector2 offsetFront = new Vector2(0f, 0.2f);
 
-    [Header("Timing")]
-    public float biteDelay = 1f;
-    public float returnRightTime = 2f;
-    public float pickupDelayAfterDrop = 1f;
-
     Animator anim;
-
-    bool isRunning = false;
-    bool isCarrying = false;
-    bool returningRight = false;
-
     GameObject carriedBall;
-
+    Vector2 dropTarget;
+    bool isCarrying = false;
+    bool isMovingToTarget = false;
+    bool isExiting = false;
     float pickupCooldown = 0f;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-
-        // se não foi setado manualmente, busca automaticamente
-        if (targetPoint == null)
-        {
-            GameObject obj = GameObject.FindGameObjectWithTag("FoxBallStart");
-
-            if (obj != null)
-            {
-                targetPoint = obj.transform;
-            }
-            else
-            {
-                Debug.LogWarning("FoxBallStart não encontrado na cena!");
-            }
-        }
     }
 
     void Update()
     {
-        // cooldown de captura
         if (pickupCooldown > 0f)
             pickupCooldown -= Time.deltaTime;
 
-        // --- voltar para direita ---
-        if (returningRight)
-        {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (isExiting) return;
 
-            anim.SetBool("IsRunning", true);
-            anim.SetFloat("MoveX", 1);
-            anim.SetFloat("MoveY", 0);
-            return;
-        }
-
-        // --- idle ---
-        if (!isRunning)
+        if (!isMovingToTarget)
         {
             anim.SetBool("IsRunning", false);
             return;
         }
 
-        Vector2 pos = transform.position;
-        Vector2 target = targetPoint.position;
+        float currentSpeed = isCarrying ? carrySpeed : speed;
+        Vector2 diff = dropTarget - (Vector2)transform.position;
 
-        float dx = target.x - pos.x;
-        float dy = target.y - pos.y;
-
-        // --- mover X ---
-        if (Mathf.Abs(dx) > 0.05f)
+        if (diff.magnitude > 0.1f)
         {
-            float moveX = Mathf.Sign(dx);
-
-            transform.Translate(new Vector2(moveX, 0) * speed * Time.deltaTime);
+            Vector2 dir = diff.normalized;
+            transform.Translate(dir * currentSpeed * Time.deltaTime);
 
             anim.SetBool("IsRunning", true);
-            anim.SetFloat("MoveX", moveX);
-            anim.SetFloat("MoveY", 0);
-        }
-        // --- mover Y ---
-        else if (Mathf.Abs(dy) > 0.05f)
-        {
-            float moveY = Mathf.Sign(dy);
+            anim.SetFloat("MoveX", dir.x);
+            anim.SetFloat("MoveY", dir.y);
 
-            transform.Translate(new Vector2(0, moveY) * speed * Time.deltaTime);
-
-            anim.SetBool("IsRunning", true);
-            anim.SetFloat("MoveX", 0);
-            anim.SetFloat("MoveY", moveY);
+            UpdateBallPosition(dir);
         }
-        // --- chegou ---
         else
         {
-            isRunning = false;
-
+            isMovingToTarget = false;
             anim.SetBool("IsRunning", false);
             anim.SetFloat("MoveX", 0);
             anim.SetFloat("MoveY", 0);
 
             DropBall();
-
-            StartCoroutine(ReturnRightRoutine());
+            StartCoroutine(ExitDownward());
         }
-
-        UpdateBallPosition();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.name);
-
-        if (col.CompareTag("Ball") && !isCarrying && pickupCooldown <= 0f)
-        {
+        if (col.CompareTag("Ball") && !isCarrying && !isExiting && pickupCooldown <= 0f)
             StartCoroutine(PickBallWithDelay(col.gameObject));
-        }
     }
 
     IEnumerator PickBallWithDelay(GameObject ball)
     {
         isCarrying = true;
 
-        Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
+        var rb = ball.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        Collider2D ballCol = ball.GetComponent<Collider2D>();
+        var ballCol = ball.GetComponent<Collider2D>();
         if (ballCol != null) ballCol.enabled = false;
 
-        TrailRenderer trail = ball.GetComponent<TrailRenderer>();
+        var trail = ball.GetComponent<TrailRenderer>();
         if (trail != null) trail.emitting = false;
 
         yield return new WaitForSeconds(biteDelay);
@@ -148,7 +97,9 @@ public class FoxAI : MonoBehaviour
         carriedBall.transform.SetParent(mouthPoint);
         carriedBall.transform.localPosition = Vector3.zero;
 
-        isRunning = true;
+        // Drop the ball a set distance below where the fox currently is
+        dropTarget = new Vector2(transform.position.x, transform.position.y - dropDistance);
+        isMovingToTarget = true;
     }
 
     void DropBall()
@@ -157,51 +108,48 @@ public class FoxAI : MonoBehaviour
 
         carriedBall.transform.SetParent(null);
 
-        Rigidbody2D rb = carriedBall.GetComponent<Rigidbody2D>();
+        var rb = carriedBall.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
 
-        Collider2D ballCol = carriedBall.GetComponent<Collider2D>();
+        var ballCol = carriedBall.GetComponent<Collider2D>();
         if (ballCol != null) ballCol.enabled = true;
 
-        TrailRenderer trail = carriedBall.GetComponent<TrailRenderer>();
+        var trail = carriedBall.GetComponent<TrailRenderer>();
         if (trail != null) trail.emitting = true;
 
         carriedBall = null;
         isCarrying = false;
-
         pickupCooldown = pickupDelayAfterDrop;
     }
 
-    IEnumerator ReturnRightRoutine()
+    IEnumerator ExitDownward()
     {
-        returningRight = true;
-
-        yield return new WaitForSeconds(returnRightTime);
-
-        returningRight = false;
-
-        anim.SetBool("IsRunning", false);
+        isExiting = true;
+        anim.SetBool("IsRunning", true);
         anim.SetFloat("MoveX", 0);
-        anim.SetFloat("MoveY", 0);
+        anim.SetFloat("MoveY", -1);
+
+        float elapsed = 0f;
+        while (elapsed < exitDuration)
+        {
+            transform.Translate(Vector2.down * exitSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
-    void UpdateBallPosition()
+    void UpdateBallPosition(Vector2 dir)
     {
         if (carriedBall == null) return;
 
-        float moveX = anim.GetFloat("MoveX");
-        float moveY = anim.GetFloat("MoveY");
-
-        // lateral
-        if (Mathf.Abs(moveX) > 0.1f)
+        if (Mathf.Abs(dir.x) > 0.1f)
         {
-            float x = offsetSide.x;
-            if (moveX < 0) x *= -1;
-
+            float x = offsetSide.x * Mathf.Sign(dir.x);
             carriedBall.transform.localPosition = new Vector3(x, offsetSide.y, 0);
         }
-        // frente
-        else if (moveY < -0.1f)
+        else if (dir.y < -0.1f)
         {
             carriedBall.transform.localPosition = new Vector3(offsetFront.x, offsetFront.y, 0);
         }
