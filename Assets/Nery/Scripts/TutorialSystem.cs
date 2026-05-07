@@ -21,6 +21,7 @@ public class TutorialSystem : MonoBehaviour
     [Header("Media")]
     public GameObject mediaPanel;
     public Image imageDisplay;
+    public Image animationDisplay;
     public SpriteAnimation spriteAnimation;
     public Animator mediaAnimator;
 
@@ -97,8 +98,8 @@ public class TutorialSystem : MonoBehaviour
     // ─── Mídia ────────────────────────────────────────────────
 
     void UpdateMedia(Tutorial entry) {
-        // Reseta tudo
         imageDisplay.gameObject.SetActive(false);
+        animationDisplay.gameObject.SetActive(false);
         spriteAnimation.Stop();
 
         if (entry.mediaType != MediaType.None) {
@@ -115,7 +116,9 @@ public class TutorialSystem : MonoBehaviour
                 break;
 
             case MediaType.SpriteAnimation:
-                spriteAnimation.Play();
+                float delay = entry.frameDelay > 0 ? entry.frameDelay : 0.1f;
+                spriteAnimation.imageDisplay = animationDisplay;
+                spriteAnimation.Play(entry.animationFrames, delay);
                 break;
 
             case MediaType.Animation:

@@ -12,7 +12,8 @@ public struct Tutorial {
     public MediaType mediaType;
     public Sprite image;
     public string animationTrigger;
-    // SpriteAnimation é configurado direto no componente, não aqui
+    public Sprite[] animationFrames;
+    public float frameDelay;
 }
 
 [CreateAssetMenu(fileName = "TutorialData", menuName = "Scriptable Objects/TutorialData", order = 1)]
