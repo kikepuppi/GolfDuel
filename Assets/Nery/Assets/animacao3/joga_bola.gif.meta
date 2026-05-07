@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: bc13df43927b41d9c8d9576b9f908377
+guid: 640f322383928c2c682149508c13c2ed
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2622753758184894013
-    second: anim1_0
+      213: 3839261013162660484
+    second: joga_bola_0
   - first:
-      213: -7951076807903997876
-    second: anim1_1
+      213: -3448775334097339314
+    second: joga_bola_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: anim1_0
+      name: joga_bola_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 9
-        width: 73
-        height: 72
+        x: 144
+        y: 62
+        width: 118
+        height: 117
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d3e6ee9a5a4e56420800000000000000
-      internalID: 2622753758184894013
+      spriteID: 4821199dc8bc74530800000000000000
+      internalID: 3839261013162660484
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: anim1_1
+      name: joga_bola_1
       rect:
         serializedVersion: 2
-        x: 467
+        x: 293
         y: 0
-        width: 130
-        height: 211
+        width: 133
+        height: 133
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c40190315c918a190800000000000000
-      internalID: -7951076807903997876
+      spriteID: e4cbff42b1d7320d0800000000000000
+      internalID: -3448775334097339314
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      anim1_0: 2622753758184894013
-      anim1_1: -7951076807903997876
+      joga_bola_0: 3839261013162660484
+      joga_bola_1: -3448775334097339314
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

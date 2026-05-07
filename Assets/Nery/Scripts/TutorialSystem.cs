@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
@@ -20,10 +19,9 @@ public class TutorialSystem : MonoBehaviour
     public Button skipButton;
 
     [Header("Media")]
-    public GameObject mediaPanel;      // painel que engloba toda a mídia
-    public Image imageDisplay;         // UI Image para Sprites
-    public RawImage videoDisplay;      // RawImage para o VideoPlayer renderizar
-    public VideoPlayer videoPlayer;
+    public GameObject mediaPanel;
+    public Image imageDisplay;
+    public SpriteAnimation spriteAnimation;
     public Animator mediaAnimator;
 
     [Header("Scene")]
@@ -101,9 +99,8 @@ public class TutorialSystem : MonoBehaviour
     void UpdateMedia(Tutorial entry) {
         // Reseta tudo
         imageDisplay.gameObject.SetActive(false);
-        videoDisplay.gameObject.SetActive(false);
-        videoPlayer.Stop();
-        
+        spriteAnimation.Stop();
+
         if (entry.mediaType != MediaType.None) {
             mediaPanel.SetActive(true);
         } else {
@@ -117,34 +114,29 @@ public class TutorialSystem : MonoBehaviour
                 imageDisplay.sprite = entry.image;
                 break;
 
-            case MediaType.Video:
-                videoDisplay.gameObject.SetActive(true);
-                videoPlayer.clip = entry.video;
-                videoPlayer.targetTexture = new RenderTexture(
-                    (int)videoDisplay.rectTransform.rect.width,
-                    (int)videoDisplay.rectTransform.rect.height, 0
-                );
-                videoDisplay.texture = videoPlayer.targetTexture;
-                videoPlayer.Play();
+            case MediaType.SpriteAnimation:
+                spriteAnimation.Play();
                 break;
 
             case MediaType.Animation:
-		imageDisplay.gameObject.SetActive(true);
-		if (mediaAnimator != null && !string.IsNullOrEmpty(entry.animationTrigger))
-		    mediaAnimator.SetTrigger(entry.animationTrigger);
-		break;
+                imageDisplay.gameObject.SetActive(true);
+                if (mediaAnimator != null && !string.IsNullOrEmpty(entry.animationTrigger))
+                    mediaAnimator.SetTrigger(entry.animationTrigger);
+                break;
         }
     }
 
     // ─── Skip / Fim ───────────────────────────────────────────
 
     void SkipTutorial() {
+        spriteAnimation.Stop();
         tutorialPanel.SetActive(false);
         SceneManager.LoadScene(nextSceneName);
     }
 
     void EndTutorial() {
         state = STATE.DISABLED;
+        spriteAnimation.Stop();
         tutorialPanel.SetActive(false);
         SceneManager.LoadScene(nextSceneName);
     }
