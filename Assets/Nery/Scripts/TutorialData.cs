@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Video;
 using System;
 using System.Collections.Generic;
 
-public enum MediaType { None, Image, Video, Animation }
+public enum MediaType { None, Image, SpriteAnimation, Animation }
 
 [Serializable]
 public struct Tutorial {
@@ -12,8 +11,9 @@ public struct Tutorial {
 
     public MediaType mediaType;
     public Sprite image;
-    public VideoClip video;
-    public string animationTrigger; // nome do trigger no Animator
+    public string animationTrigger;
+    public Sprite[] animationFrames;
+    public float frameDelay;
 }
 
 [CreateAssetMenu(fileName = "TutorialData", menuName = "Scriptable Objects/TutorialData", order = 1)]

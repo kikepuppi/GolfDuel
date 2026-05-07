@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: 88a01252e864b7dac87d2142c69403f1
+guid: 372a2c44cb93a5204a044c6394139393
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4842582042960490510
-    second: anim3_0
+      213: -4077099796553241776
+    second: bola1_0
   - first:
-      213: 973460963389427498
-    second: anim3_1
-  - first:
-      213: -3372553263236925159
-    second: anim3_2
-  - first:
-      213: -5265322104552662096
-    second: anim3_3
+      213: -8348919630997408757
+    second: bola1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -122,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: anim3_0
+      name: bola1_0
       rect:
         serializedVersion: 2
-        x: 444
-        y: 76
-        width: 13
-        height: 13
+        x: 142
+        y: 61
+        width: 122
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ff87adf941bbccb0800000000000000
-      internalID: -4842582042960490510
+      spriteID: 05b60a0265b3b67c0800000000000000
+      internalID: -4077099796553241776
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: anim3_1
+      name: bola1_1
       rect:
         serializedVersion: 2
-        x: 451
+        x: 293
         y: 0
-        width: 146
-        height: 211
+        width: 133
+        height: 133
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,52 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2f498da69d628d00800000000000000
-      internalID: 973460963389427498
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: anim3_2
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 52
-        width: 22
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 919bda6fca84231d0800000000000000
-      internalID: -3372553263236925159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: anim3_3
-      rect:
-        serializedVersion: 2
-        x: 442
-        y: 28
-        width: 13
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0bb502a5171dde6b0800000000000000
-      internalID: -5265322104552662096
+      spriteID: b043d1084dda22c80800000000000000
+      internalID: -8348919630997408757
       vertices: []
       indices: 
       edges: []
@@ -213,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      anim3_0: -4842582042960490510
-      anim3_1: 973460963389427498
-      anim3_2: -3372553263236925159
-      anim3_3: -5265322104552662096
+      bola1_0: -4077099796553241776
+      bola1_1: -8348919630997408757
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
