@@ -7,6 +7,7 @@ public class DragAndPlace : MonoBehaviour
     public GameObject foxPrefab;
     public GameObject treePrefab;
     public GameObject rockPrefab;
+    public GameObject windmillPrefab;
 
     [Tooltip("P2's lane — P1 places obstacles here")]
     public Collider2D p2PlacementArea;
@@ -158,6 +159,7 @@ public class DragAndPlace : MonoBehaviour
     public void SelectFox() { HideCurrentPanel(); StartDrag(foxPrefab); }
     public void SelectTree() { HideCurrentPanel(); StartDrag(treePrefab); }
     public void SelectRock() { HideCurrentPanel(); StartDrag(rockPrefab); }
+    public void SelectWindmill() { HideCurrentPanel(); StartDrag(windmillPrefab); }
 
     void HideCurrentPanel()
     {
