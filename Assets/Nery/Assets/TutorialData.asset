@@ -20,7 +20,7 @@ MonoBehaviour:
     animationFrames: []
     frameDelay: 0
   - text: "O objetivo \xE9 simples: terminar todas as rodadas com o menor n\xFAmero
-      de tacadas poss\xEDvel."
+      poss\xEDvel de tacadas at\xE9 atingir a bandeira."
     mediaType: 2
     image: {fileID: 21300000, guid: 544dfbfd9edec558a8274a9f513a0f75, type: 3}
     animationTrigger: 
@@ -29,8 +29,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2584cc677c0dd941cb0c77ecc2a3d4c1, type: 3}
     - {fileID: 21300000, guid: f2f67d80a1d9632f083d63280b50fd7f, type: 3}
     frameDelay: 1
-  - text: "A cada rodada, voc\xEA pode escolher entre uma sele\xE7\xE3o de Buffs
-      / Obst\xE1culos para utilizar ou atrapalhar seu oponente."
+  - text: "A cada rodada, voc\xEA pode escolher entre uma sele\xE7\xE3o de buffs
+      e obst\xE1culos para se ajudar ou atrapalhar seu oponente."
     mediaType: 2
     image: {fileID: 21300000, guid: 55f666697941c331ebd956d8f717434f, type: 3}
     animationTrigger: 
@@ -41,7 +41,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5b6248c376e55276a98c77415ee74290, type: 3}
     frameDelay: 1
   - text: "Depois da fase de sele\xE7\xE3o, os jogadores tentam completar o circuito
-      com o menor n\xFAmero de tacadas."
+      da maneira mais eficiente poss\xEDvel."
     mediaType: 2
     image: {fileID: 0}
     animationTrigger: 
