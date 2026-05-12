@@ -75,7 +75,13 @@ public class DragAndPlace : MonoBehaviour
             currentZone.Show(true);
 
         Collider2D area = ActivePlacementArea();
-        bool isInside = area != null && area.OverlapPoint(currentDrag.transform.position);
+        bool isInside = false;
+        if (area != null && currentZoneCol != null)
+        {
+            Bounds areaB = area.bounds;
+            Bounds zoneB = currentZoneCol.bounds;
+            isInside = areaB.Contains(zoneB.min) && areaB.Contains(zoneB.max);
+        }
 
         bool overlaps = false;
 
