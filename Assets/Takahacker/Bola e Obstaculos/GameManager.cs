@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     bool p1Finished = false;
     bool p2Finished = false;
+    public CameraFollow gameCamera;
 
     [Header("Phase Events — wire UI show/hide here")]
     public UnityEvent onP1ObstacleSelectionStart;
@@ -25,6 +26,13 @@ public class GameManager : MonoBehaviour
     public UnityEvent onP1TurnStart;
     public UnityEvent onP2TurnStart;
     public UnityEvent onGameOver;
+
+    [Header("References for round reset")]
+    public GolfInput p1Ball;
+    public GolfInput p2Ball;
+    public Transform p1BallStart;
+    public Transform p2BallStart;
+    public DragAndPlace dragAndPlace;
 
     void Awake()
     {
@@ -51,12 +59,12 @@ public class GameManager : MonoBehaviour
         if (playerIndex == 0 && CurrentPhase == GamePhase.P1Turn)
         {
             if (!p2Finished) SetPhase(GamePhase.P2Turn);
-            else SetPhase(GamePhase.GameOver);
+            // se P2 já terminou, P1 continua jogando (mantém fase)
         }
         else if (playerIndex == 1 && CurrentPhase == GamePhase.P2Turn)
         {
             if (!p1Finished) SetPhase(GamePhase.P1Turn);
-            else SetPhase(GamePhase.GameOver);
+            // se P1 já terminou, P2 continua jogando
         }
     }
 
@@ -66,11 +74,30 @@ public class GameManager : MonoBehaviour
         if (playerIndex == 0) p1Finished = true;
         else p2Finished = true;
 
-        if (p1Finished && p2Finished) { SetPhase(GamePhase.GameOver); return; }
+        if (p1Finished && p2Finished)
+        {
+            ResetRound();
+            return;
+        }
 
         if (playerIndex == 0 && !p2Finished) SetPhase(GamePhase.P2Turn);
         else if (playerIndex == 1 && !p1Finished) SetPhase(GamePhase.P1Turn);
-        else SetPhase(GamePhase.GameOver);
+    }
+
+    void ResetRound()
+    {
+        if (p1Ball != null && p1BallStart != null)
+            p1Ball.ResetForNewRound(p1BallStart.position);
+        if (p2Ball != null && p2BallStart != null)
+            p2Ball.ResetForNewRound(p2BallStart.position);
+
+        if (dragAndPlace != null)
+            dragAndPlace.ResetAllObstacles();
+
+        p1Finished = false;
+        p2Finished = false;
+        if (gameCamera != null) gameCamera.ResetPosition();
+        SetPhase(GamePhase.P1ObstacleSelection);
     }
 
     void SetPhase(GamePhase phase)

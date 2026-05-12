@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ball
-  - FoxBallStart
   - Cow
+  - BallStartP1
+  - BallStartP2
   layers:
   - Default
   - TransparentFX
