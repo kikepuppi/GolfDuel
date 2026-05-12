@@ -71,13 +71,13 @@ Material:
     - _BotCircleX: 0.491
     - _BotCircleY: 0.65
     - _BotRadius: 0.65
-    - _ChunkScale: 4.6
+    - _ChunkScale: 4.8
     - _Density: 47.1
     - _EnableExternalAlpha: 0
     - _FoliageBlend: 1
     - _GrassChance: 0
     - _SpriteDarken: 0.821
-    - _Threshold2: 0.2
+    - _Threshold2: 0.86
     - _Threshold3: 0.53
     - _TopCircleX: 0.585
     - _TopCircleY: 0.35
