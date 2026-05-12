@@ -77,6 +77,9 @@ public class UIManager : MonoBehaviour
 
     public void ProximoParaTutorial()
     {
+        PlayerPrefs.SetString("Player1Name", inputNomeP1.text);
+        PlayerPrefs.SetString("Player2Name", inputNomeP2.text);
+        PlayerPrefs.Save();
         canvasConfig.SetActive(false);
         canvasTutorial.SetActive(true);
         tutorialSystem.IniciarTutorial();
