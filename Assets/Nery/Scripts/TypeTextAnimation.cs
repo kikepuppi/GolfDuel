@@ -10,6 +10,13 @@ public class TypeTextAnimation : MonoBehaviour
 
     public bool isTyping { get; private set; } = false;
 
+    void Awake() {
+        if (textObject != null) {
+            textObject.text = "";
+            textObject.maxVisibleCharacters = 0;
+        }
+    }
+
     public void StartTyping() {
         StopAllCoroutines();
         StartCoroutine(TypeText());

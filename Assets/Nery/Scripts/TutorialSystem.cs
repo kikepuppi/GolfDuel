@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public enum STATE {
     DISABLED,
@@ -17,6 +18,7 @@ public class TutorialSystem : MonoBehaviour
     [Header("UI")]
     public GameObject tutorialPanel;
     public Button skipButton;
+    public Button nextButton;
 
     [Header("Media")]
     public GameObject mediaPanel;
@@ -40,7 +42,11 @@ public class TutorialSystem : MonoBehaviour
 
     void Start() {
         skipButton.onClick.AddListener(SkipTutorial);
+        nextButton.onClick.AddListener(OnNextButtonClick);
         state = STATE.WAITING;
+    }
+    
+    public void IniciarTutorial() {
         Next();
     }
 
@@ -71,6 +77,17 @@ public class TutorialSystem : MonoBehaviour
         UpdateMedia(entry);
 
         state = STATE.TYPING;
+    }
+
+    void OnNextButtonClick() {
+        if (state == STATE.DISABLED) return;
+
+        if (typeText.isTyping) {
+            typeText.SkipTyping();
+            state = STATE.WAITING;
+        } else {
+            Next();
+        }
     }
 
     void Waiting() {
@@ -133,14 +150,21 @@ public class TutorialSystem : MonoBehaviour
 
     void SkipTutorial() {
         spriteAnimation.Stop();
-        tutorialPanel.SetActive(false);
-        SceneManager.LoadScene(nextSceneName);
+        StartCoroutine(CarregarCena());
     }
 
     void EndTutorial() {
         state = STATE.DISABLED;
         spriteAnimation.Stop();
-        tutorialPanel.SetActive(false);
-        SceneManager.LoadScene(nextSceneName);
+        StartCoroutine(CarregarCena());
+    }
+
+    IEnumerator CarregarCena() {
+        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneName);
+        op.allowSceneActivation = false;
+        while (op.progress < 0.9f) {
+            yield return null;
+        }
+        op.allowSceneActivation = true;
     }
 }
