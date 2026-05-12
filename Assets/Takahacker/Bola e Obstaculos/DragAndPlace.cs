@@ -34,6 +34,7 @@ public class DragAndPlace : MonoBehaviour
     bool skipNextMouseUp;
 
     List<ForbiddenZone> allZones = new List<ForbiddenZone>();
+    List<ObstacleState> allObstacles = new List<ObstacleState>();
 
     ContactFilter2D overlapFilter;
 
@@ -134,7 +135,8 @@ public class DragAndPlace : MonoBehaviour
                 currentZone.transform.SetParent(targetBg, worldPositionStays: true);
                 currentZone.Lock();
                 allZones.Add(currentZone);
-
+                var obstacleState = currentDrag.GetComponent<ObstacleState>();
+                if (obstacleState != null) allObstacles.Add(obstacleState);
                 var state = currentDrag.GetComponent<ObstacleState>();
                 if (state != null) state.SetDragging(false);
 
@@ -198,5 +200,13 @@ public class DragAndPlace : MonoBehaviour
 
         var state = currentDrag.GetComponent<ObstacleState>();
         if (state != null) state.SetDragging(true);
+    }
+
+    public void ResetAllObstacles()
+    {
+        foreach (var state in allObstacles)
+        {
+            if (state != null) state.ResetToInitial();
+        }
     }
 }
