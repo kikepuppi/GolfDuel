@@ -95,6 +95,7 @@ public class GolfInput : MonoBehaviour
             Vector2 force = dragVector.normalized * (distance / maxDragDistance) * maxForce;
 
             rb.AddForce(force, ForceMode2D.Impulse);
+            GameManager.Instance?.AddStroke(playerIndex);
 
             isDragging = false;
             shotInProgress = true;
