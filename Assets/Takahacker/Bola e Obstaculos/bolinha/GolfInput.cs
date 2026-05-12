@@ -195,4 +195,21 @@ public class GolfInput : MonoBehaviour
         ColorUtility.TryParseHtmlString(hex, out c);
         return c;
     }
+
+    public void ResetForNewRound(Vector3 startPosition)
+    {
+        IsFinished = false;
+        isDragging = false;
+        shotInProgress = false;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        transform.position = startPosition;
+
+        if (col != null) col.enabled = true;
+        if (arrow != null) arrow.gameObject.SetActive(false);
+
+        gameObject.SetActive(true);
+    }
 }

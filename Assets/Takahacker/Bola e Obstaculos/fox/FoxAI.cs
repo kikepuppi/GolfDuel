@@ -48,19 +48,29 @@ public class FoxAI : MonoBehaviour
         float currentSpeed = isCarrying ? carrySpeed : speed;
         Vector2 diff = dropTarget - (Vector2)transform.position;
 
-        if (diff.magnitude > 0.1f)
+        if (Mathf.Abs(diff.x) > 0.05f)
         {
-            Vector2 dir = diff.normalized;
-            transform.Translate(dir * currentSpeed * Time.deltaTime);
+            float moveX = Mathf.Sign(diff.x);
+            transform.Translate(new Vector2(moveX, 0) * currentSpeed * Time.deltaTime);
 
             anim.SetBool("IsRunning", true);
-            anim.SetFloat("MoveX", dir.x);
-            anim.SetFloat("MoveY", dir.y);
+            anim.SetFloat("MoveX", moveX);
+            anim.SetFloat("MoveY", 0);
+            UpdateBallPosition(new Vector2(moveX, 0));
+        }
+        else if (Mathf.Abs(diff.y) > 0.05f)
+        {
+            float moveY = Mathf.Sign(diff.y);
+            transform.Translate(new Vector2(0, moveY) * currentSpeed * Time.deltaTime);
 
-            UpdateBallPosition(dir);
+            anim.SetBool("IsRunning", true);
+            anim.SetFloat("MoveX", 0);
+            anim.SetFloat("MoveY", moveY);
+            UpdateBallPosition(new Vector2(0, moveY));
         }
         else
         {
+            transform.position = new Vector3(dropTarget.x, dropTarget.y, transform.position.z);
             isMovingToTarget = false;
             anim.SetBool("IsRunning", false);
             anim.SetFloat("MoveX", 0);
@@ -70,11 +80,13 @@ public class FoxAI : MonoBehaviour
             StartCoroutine(ExitDownward());
         }
     }
-
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Ball") && !isCarrying && !isExiting && pickupCooldown <= 0f)
-            StartCoroutine(PickBallWithDelay(col.gameObject));
+        if (!col.CompareTag("Ball")) return;
+        if (col.transform.parent != null) return; // bola está sendo carregada
+        if (isCarrying || isExiting || pickupCooldown > 0f) return;
+
+        StartCoroutine(PickBallWithDelay(col.gameObject));
     }
 
     IEnumerator PickBallWithDelay(GameObject ball)
@@ -83,10 +95,7 @@ public class FoxAI : MonoBehaviour
 
         var rb = ball.GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
-
-        var ballCol = ball.GetComponent<Collider2D>();
-        if (ballCol != null) ballCol.enabled = false;
+        rb.simulated = false;
 
         var trail = ball.GetComponent<TrailRenderer>();
         if (trail != null) trail.emitting = false;
@@ -97,8 +106,10 @@ public class FoxAI : MonoBehaviour
         carriedBall.transform.SetParent(mouthPoint);
         carriedBall.transform.localPosition = Vector3.zero;
 
-        // Drop the ball a set distance below where the fox currently is
-        dropTarget = new Vector2(transform.position.x, transform.position.y - dropDistance);
+        var golfInput = ball.GetComponent<GolfInput>();
+        string startTag = golfInput.playerIndex == 0 ? "BallStartP1" : "BallStartP2";
+        GameObject startObj = GameObject.FindGameObjectWithTag(startTag);
+        dropTarget = startObj.transform.position;
         isMovingToTarget = true;
     }
 
@@ -109,10 +120,8 @@ public class FoxAI : MonoBehaviour
         carriedBall.transform.SetParent(null);
 
         var rb = carriedBall.GetComponent<Rigidbody2D>();
+        rb.simulated = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
-
-        var ballCol = carriedBall.GetComponent<Collider2D>();
-        if (ballCol != null) ballCol.enabled = true;
 
         var trail = carriedBall.GetComponent<TrailRenderer>();
         if (trail != null) trail.emitting = true;
@@ -121,7 +130,6 @@ public class FoxAI : MonoBehaviour
         isCarrying = false;
         pickupCooldown = pickupDelayAfterDrop;
     }
-
     IEnumerator ExitDownward()
     {
         isExiting = true;
@@ -137,9 +145,17 @@ public class FoxAI : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
-    }
+        isExiting = false;
+        isMovingToTarget = false;
+        isCarrying = false;
+        pickupCooldown = 0f;
 
+        anim.SetBool("IsRunning", false);
+        anim.SetFloat("MoveX", 0);
+        anim.SetFloat("MoveY", 0);
+
+        gameObject.SetActive(false);
+    }
     void UpdateBallPosition(Vector2 dir)
     {
         if (carriedBall == null) return;

@@ -16,8 +16,16 @@ public class CameraFollow : MonoBehaviour
     public float selectionMinY = -50f;
     public float selectionMaxY = 50f;
 
+    [Header("Smoothing")]
+    public float smoothTime = 0.15f;
+    float yVelocity;
+
     float fixedX;
     float fixedZ;
+
+    [Header("Reset Position")]
+    public float resetY = 0f;
+
 
     void Start()
     {
@@ -43,12 +51,19 @@ public class CameraFollow : MonoBehaviour
         {
             Transform target = GetActiveBall();
             if (target == null) return;
-            pos.y = Mathf.Clamp(target.position.y, gameplayMinY, gameplayMaxY);
+            float targetY = Mathf.Clamp(target.position.y, gameplayMinY, gameplayMaxY);
+            pos.y = Mathf.SmoothDamp(pos.y, targetY, ref yVelocity, smoothTime);
         }
 
         transform.position = pos;
     }
 
+    public void ResetPosition()
+    {
+        Vector3 pos = transform.position;
+        pos.y = resetY;
+        transform.position = pos;
+    }
     bool IsObstacleSelectionPhase()
     {
         if (GameManager.Instance == null) return false;
