@@ -65,20 +65,20 @@ Material:
     - _AccentScaleMin2: 0.1
     - _BladeScale: 1.47
     - _BladeScaleMin: 1.98
-    - _BorderLeafSize: 3
-    - _BorderScale: 77.1
+    - _BorderLeafSize: 2.46
+    - _BorderScale: 30
     - _BorderWindMult: 5
     - _BotCircleX: 0.491
     - _BotCircleY: 0.65
     - _BotRadius: 0.65
-    - _ChunkScale: 14.3
-    - _Density: 47.1
+    - _ChunkScale: 5
+    - _Density: 50
     - _EnableExternalAlpha: 0
     - _FoliageBlend: 1
     - _GrassChance: 0
-    - _SpriteDarken: 0.821
-    - _Threshold2: 0.282
-    - _Threshold3: 0.632
+    - _SpriteDarken: 1
+    - _Threshold2: 0.33
+    - _Threshold3: 0.5
     - _TopCircleX: 0.585
     - _TopCircleY: 0.35
     - _TopRadius: 0.65
