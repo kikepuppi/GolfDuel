@@ -68,7 +68,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.08}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -78,7 +78,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.4}
+  m_Size: {x: 1, y: 0.25}
   m_EdgeRadius: 0
 --- !u!114 &7229507227995466968
 MonoBehaviour:
@@ -118,8 +118,8 @@ Transform:
   m_GameObject: {fileID: 4898653868307081497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0023398483, y: 0.0036841598, z: 0}
-  m_LocalScale: {x: 1.0060965, y: 0.38273507, z: 1.1804}
+  m_LocalPosition: {x: -0.0023398288, y: 0.067447305, z: 0}
+  m_LocalScale: {x: 0.9894574, y: 0.25520775, z: 1.1804}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1674405138584574464}
@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 5987990618503462730}
   - component: {fileID: 7316684514549349792}
   - component: {fileID: 2533112274363306001}
+  - component: {fileID: -4417335502122822607}
   m_Layer: 0
   m_Name: cow
   m_TagString: Cow
@@ -214,8 +215,8 @@ Transform:
   m_GameObject: {fileID: 7641654494406631631}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.521361, y: 0.8542477, z: 0}
-  m_LocalScale: {x: 15.777386, y: 16.557266, z: 14.2183485}
+  m_LocalPosition: {x: 4.074047, y: 2.0048618, z: 0}
+  m_LocalScale: {x: 13.291869, y: 13.845381, z: 10.100715}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1674405138584574464}
@@ -314,8 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e985214ac20ffe24ca281dbedd433fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CowAutoMove
-  speed: 1
-  moveDistance: 2
+  speed: 2
+  moveDistance: 3
 --- !u!61 &5987990618503462730
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -401,3 +402,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56355be367eecc640a2f48ee32d38133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleState
+--- !u!114 &-4417335502122822607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641654494406631631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e8e75cce14a4f51a69438e37a5d2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleCollisionSound
+  obstacleType: 0
+  minImpactVelocity: 1.5

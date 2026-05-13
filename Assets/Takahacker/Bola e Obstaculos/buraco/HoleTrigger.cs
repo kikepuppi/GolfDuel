@@ -35,6 +35,7 @@ public class HoleTrigger : MonoBehaviour
 
         golfInput.SetFinished();
         col.gameObject.SetActive(false);
+        SoundManager.Instance?.PlayHoleSound();
         GameManager.Instance?.OnBallHoled(golfInput.playerIndex);
     }
 
