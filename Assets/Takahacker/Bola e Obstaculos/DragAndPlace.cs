@@ -163,11 +163,11 @@ public class DragAndPlace : MonoBehaviour
     }
 
     // Called by UI buttons
-    public void SelectCow()      => StartDrag(cowPrefab);
-    public void SelectFox()      => StartDrag(foxPrefab);
-    public void SelectTree()     => StartDrag(treePrefab);
-    public void SelectRock()     => StartDrag(rockPrefab);
-    public void SelectWindmill() => StartDrag(windmillPrefab);
+    public void SelectCow()      { SoundManager.Instance?.PlayCowSelectSound(); StartDrag(cowPrefab); }
+    public void SelectFox()      { SoundManager.Instance?.PlayFoxSelectSound(); StartDrag(foxPrefab); }
+    public void SelectTree()     { SoundManager.Instance?.PlayTreeSelectSound(); StartDrag(treePrefab); }
+    public void SelectRock()     { SoundManager.Instance?.PlayRockSelectSound(); StartDrag(rockPrefab); }
+    public void SelectWindmill() { SoundManager.Instance?.PlayWindmillSelectSound(); StartDrag(windmillPrefab); }
 
     void StartDrag(GameObject prefab)
     {

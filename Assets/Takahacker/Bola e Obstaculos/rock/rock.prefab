@@ -69,7 +69,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.25}
-  m_Radius: 0.5
+  m_Radius: 0.33
 --- !u!114 &5918781896654400110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 2517572257107894476}
   - component: {fileID: 3394270163973297330}
   - component: {fileID: 7871836731713258501}
+  - component: {fileID: 5020833094556987140}
   m_Layer: 0
   m_Name: rock
   m_TagString: Untagged
@@ -269,6 +270,20 @@ PolygonCollider2D:
       - {x: 0.21, y: 0.2}
       - {x: 0.23, y: 0.47}
   m_UseDelaunayMesh: 1
+--- !u!114 &5020833094556987140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253185678218612475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e8e75cce14a4f51a69438e37a5d2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleCollisionSound
+  obstacleType: 3
+  minImpactVelocity: 1.5
 --- !u!1 &8569119508204143783
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,8 +310,8 @@ Transform:
   m_GameObject: {fileID: 8569119508204143783}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.005337852, y: 0.25782454, z: 0}
+  m_LocalScale: {x: 0.67857075, y: 0.6785736, z: 0.714285}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7566714676774966032}
