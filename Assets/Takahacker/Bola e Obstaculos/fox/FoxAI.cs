@@ -21,7 +21,8 @@ public class FoxAI : MonoBehaviour
 
     Animator anim;
     GameObject carriedBall;
-    Vector2 dropTarget;
+    public Transform dropTarget;
+    Vector3 dropPosition;
     bool isCarrying = false;
     bool isMovingToTarget = false;
     bool isExiting = false;
@@ -46,7 +47,7 @@ public class FoxAI : MonoBehaviour
         }
 
         float currentSpeed = isCarrying ? carrySpeed : speed;
-        Vector2 diff = dropTarget - (Vector2)transform.position;
+        Vector2 diff = (Vector2)dropPosition - (Vector2)transform.position;
 
         if (Mathf.Abs(diff.x) > 0.05f)
         {
@@ -56,7 +57,6 @@ public class FoxAI : MonoBehaviour
             anim.SetBool("IsRunning", true);
             anim.SetFloat("MoveX", moveX);
             anim.SetFloat("MoveY", 0);
-            UpdateBallPosition(new Vector2(moveX, 0));
         }
         else if (Mathf.Abs(diff.y) > 0.05f)
         {
@@ -66,11 +66,10 @@ public class FoxAI : MonoBehaviour
             anim.SetBool("IsRunning", true);
             anim.SetFloat("MoveX", 0);
             anim.SetFloat("MoveY", moveY);
-            UpdateBallPosition(new Vector2(0, moveY));
         }
         else
         {
-            transform.position = new Vector3(dropTarget.x, dropTarget.y, transform.position.z);
+            transform.position = new Vector3(dropPosition.x, dropPosition.y, transform.position.z);
             isMovingToTarget = false;
             anim.SetBool("IsRunning", false);
             anim.SetFloat("MoveX", 0);
@@ -83,7 +82,7 @@ public class FoxAI : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.CompareTag("Ball")) return;
-        if (col.transform.parent != null) return; // bola est� sendo carregada
+        if (col.transform.parent != null) return; // bola est� sendo carregada
         if (isCarrying || isExiting || pickupCooldown > 0f) return;
 
         StartCoroutine(PickBallWithDelay(col.gameObject));
@@ -107,9 +106,7 @@ public class FoxAI : MonoBehaviour
         carriedBall.transform.localPosition = Vector3.zero;
 
         var golfInput = ball.GetComponent<GolfInput>();
-        string startTag = golfInput.playerIndex == 0 ? "BallStartP1" : "BallStartP2";
-        GameObject startObj = GameObject.FindGameObjectWithTag(startTag);
-        dropTarget = startObj.transform.position;
+        dropPosition = golfInput.WorldStartPosition;
         isMovingToTarget = true;
     }
 
@@ -118,6 +115,7 @@ public class FoxAI : MonoBehaviour
         if (carriedBall == null) return;
 
         carriedBall.transform.SetParent(null);
+        carriedBall.transform.position = dropPosition; // posição fixa em mundo, não scrollada com a lane
 
         var rb = carriedBall.GetComponent<Rigidbody2D>();
         rb.simulated = true;
@@ -155,19 +153,5 @@ public class FoxAI : MonoBehaviour
         anim.SetFloat("MoveY", 0);
 
         gameObject.SetActive(false);
-    }
-    void UpdateBallPosition(Vector2 dir)
-    {
-        if (carriedBall == null) return;
-
-        if (Mathf.Abs(dir.x) > 0.1f)
-        {
-            float x = offsetSide.x * Mathf.Sign(dir.x);
-            carriedBall.transform.localPosition = new Vector3(x, offsetSide.y, 0);
-        }
-        else if (dir.y < -0.1f)
-        {
-            carriedBall.transform.localPosition = new Vector3(offsetFront.x, offsetFront.y, 0);
-        }
     }
 }

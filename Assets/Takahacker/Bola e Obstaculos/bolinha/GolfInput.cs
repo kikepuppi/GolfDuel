@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class GolfInput : MonoBehaviour
@@ -27,11 +28,14 @@ public class GolfInput : MonoBehaviour
 
     float[] pontaY = new float[] { 1.4f, 2.1f, 2.8f, 3.5f, 4.2f };
 
+    public Vector3 WorldStartPosition { get; private set; }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         arrow.gameObject.SetActive(false);
+        WorldStartPosition = transform.position;
     }
 
     public void SetFinished()
@@ -92,9 +96,18 @@ public class GolfInput : MonoBehaviour
 
             float distance = Mathf.Clamp(dragVector.magnitude, 0, maxDragDistance);
 
-            Vector2 force = dragVector.normalized * (distance / maxDragDistance) * maxForce;
+            Vector2 direction = ((Vector2)ponta.position - (Vector2)transform.position).normalized;
+            Vector2 force = direction * (distance / maxDragDistance) * maxForce;
+
+            Vector2 ballPos = transform.position;
+            Vector2 pontaPos = ponta.position;
+            Vector2 vec = pontaPos - ballPos;
+            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+            Vector2 dragDir = dragVector.normalized;
+            float dragAngle = Mathf.Atan2(dragDir.y, dragDir.x) * Mathf.Rad2Deg;
 
             rb.AddForce(force, ForceMode2D.Impulse);
+
             SoundManager.Instance?.PlayShotSound();
             GameManager.Instance?.AddStroke(playerIndex);
 
@@ -207,6 +220,7 @@ public class GolfInput : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
+        WorldStartPosition = startPosition;
         transform.position = startPosition;
 
         if (col != null) col.enabled = true;

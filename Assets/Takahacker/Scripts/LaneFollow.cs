@@ -4,26 +4,34 @@ public class LaneFollow : MonoBehaviour
 {
     public Transform ball;
 
-    float fixedX;
-    float initialBallY;
-    float initialBgY;
+    float oldBallY;
+    Vector3 initialPosition;
 
-    void Start()
+    private void Start()
     {
-        fixedX = transform.position.x;
-        initialBallY = ball.position.y;
-        initialBgY = transform.position.y;
+        initialPosition = transform.position;
+        oldBallY = ball.position.y;
     }
 
     void LateUpdate()
     {
         if (ball == null) return;
 
-        float delta = ball.position.y - initialBallY;
+        float delta = ball.position.y - oldBallY;
 
         Vector3 pos = transform.position;
-        pos.x = fixedX;
-        pos.y = initialBgY - delta;
+        pos.y = Mathf.Min(pos.y - delta, initialPosition.y);
         transform.position = pos;
+        oldBallY = ball.position.y;
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = initialPosition;
+    }
+
+    public void SyncBallY()
+    {
+        if (ball != null) oldBallY = ball.position.y;
     }
 }
