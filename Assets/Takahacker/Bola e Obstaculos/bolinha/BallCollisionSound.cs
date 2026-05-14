@@ -17,10 +17,6 @@ public class BallCollisionSound : MonoBehaviour
         if (Time.time - lastCollisionTime < collisionCooldown)
             return;
 
-        // Não toca som se colidir com o buraco (HoleTrigger)
-        if (collision.gameObject.CompareTag("Hole"))
-            return;
-
         float impactVelocity = rb.linearVelocity.magnitude;
 
         if (impactVelocity > minImpactVelocity)
