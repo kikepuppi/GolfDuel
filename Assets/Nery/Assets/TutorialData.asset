@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: TutorialData
   m_EditorClassIdentifier: Assembly-CSharp::TutorialData
   talkScript:
-  - text: "Em GolfDuel, voc\xEA enfrenta outro jogador em partidas de golfe 1v1."
+  - text: Em GolfDuel, dois jogadores se enfrentam em partidas de golfe 1v1.
     mediaType: 1
     image: {fileID: 21300000, guid: 4dc5da3e6a821c7b6a80e8435be8e73a, type: 3}
     animationTrigger: 
     animationFrames: []
     frameDelay: 0
-  - text: "O objetivo \xE9 simples: terminar todas as rodadas com o menor n\xFAmero
-      poss\xEDvel de tacadas at\xE9 atingir a bandeira."
+  - text: O objetivo? Terminar todas as rodadas com a menor quantidade de tacadas
+      para atingir a bandeira.
     mediaType: 2
     image: {fileID: 21300000, guid: 544dfbfd9edec558a8274a9f513a0f75, type: 3}
     animationTrigger: 
@@ -29,8 +29,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2584cc677c0dd941cb0c77ecc2a3d4c1, type: 3}
     - {fileID: 21300000, guid: f2f67d80a1d9632f083d63280b50fd7f, type: 3}
     frameDelay: 1
-  - text: "A cada rodada, voc\xEA pode escolher entre uma sele\xE7\xE3o de buffs
-      e obst\xE1culos para se ajudar ou atrapalhar seu oponente."
+  - text: A cada rodada, cada jogador pode escolher entre diferentes buffs e barreiras
+      para se ajudar ou atrapalhar seu oponente.
     mediaType: 2
     image: {fileID: 21300000, guid: 55f666697941c331ebd956d8f717434f, type: 3}
     animationTrigger: 
@@ -40,8 +40,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 227873867cdb41ef2abac769b02ae58e, type: 3}
     - {fileID: 21300000, guid: 5b6248c376e55276a98c77415ee74290, type: 3}
     frameDelay: 1
-  - text: "Depois da fase de sele\xE7\xE3o, os jogadores tentam completar o circuito
-      da maneira mais eficiente poss\xEDvel."
+  - text: Depois da fase de escolha, os jogadores tentam completar o circuito da
+      maneira mais eficiente que conseguirem.
     mediaType: 2
     image: {fileID: 0}
     animationTrigger: 
@@ -55,8 +55,8 @@ MonoBehaviour:
     - {fileID: 1820243551359792020, guid: 007c54e62ea40b9c88e0eb597913fcf9, type: 3}
     - {fileID: 896911363081290487, guid: 9a892ffdfee3e5492aca5f1f20870571, type: 3}
     frameDelay: 1
-  - text: "Para fazer uma tacada pressione o cursor na bola e aponte a dire\xE7\xE3o
-      e intensidade de seu movimento."
+  - text: Para fazer uma tacada, pressione o cursor na bola, direcione sua jogada
+      da forma que quiser e ajuste a intensidade de seu movimento.
     mediaType: 2
     image: {fileID: 0}
     animationTrigger: 
