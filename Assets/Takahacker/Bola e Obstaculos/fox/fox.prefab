@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1528642523896726661}
   - component: {fileID: 7803936567402742161}
   - component: {fileID: 4842620285653166161}
+  - component: {fileID: 5915707134102335795}
   m_Layer: 0
   m_Name: fox
   m_TagString: Untagged
@@ -132,14 +133,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784cfe4a279d5f441b3b70757ac0fb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoxAI
-  targetPoint: {fileID: 0}
-  mouthPoint: {fileID: 4368752736051070779}
   speed: 1
+  carrySpeed: 7
+  exitSpeed: 5
+  dropDistance: 4
+  biteDelay: 1
+  pickupDelayAfterDrop: 1
+  exitDuration: 3
+  mouthPoint: {fileID: 4368752736051070779}
   offsetSide: {x: 0.15, y: 0.06}
   offsetFront: {x: 0, y: -0.03}
-  biteDelay: 1
-  returnRightTime: 2
-  pickupDelayAfterDrop: 1
 --- !u!61 &1528642523896726661
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -225,6 +228,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56355be367eecc640a2f48ee32d38133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleState
+--- !u!114 &5915707134102335795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011774374358115823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e8e75cce14a4f51a69438e37a5d2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleCollisionSound
+  obstacleType: 1
+  minImpactVelocity: 1.5
 --- !u!1 &2742605881704125996
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,8 +341,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.2
+  m_Offset: {x: 0, y: 0.06}
+  m_Radius: 0.13
 --- !u!114 &4443524342958457644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,8 +381,8 @@ Transform:
   m_GameObject: {fileID: 8334101277536562565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalPosition: {x: -0.005534906, y: 0.059904393, z: 0}
+  m_LocalScale: {x: 0.26320174, y: 0.26320174, z: 0.26320174}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1393276424646367986}

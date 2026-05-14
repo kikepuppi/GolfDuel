@@ -163,20 +163,11 @@ public class DragAndPlace : MonoBehaviour
     }
 
     // Called by UI buttons
-    public void SelectCow() { HideCurrentPanel(); StartDrag(cowPrefab); }
-    public void SelectFox() { HideCurrentPanel(); StartDrag(foxPrefab); }
-    public void SelectTree() { HideCurrentPanel(); StartDrag(treePrefab); }
-    public void SelectRock() { HideCurrentPanel(); StartDrag(rockPrefab); }
-    public void SelectWindmill() { HideCurrentPanel(); StartDrag(windmillPrefab); }
-
-    void HideCurrentPanel()
-    {
-        if (GameManager.Instance == null) return;
-        if (GameManager.Instance.CurrentPhase == GamePhase.P1ObstacleSelection)
-            p1SelectionPanel?.SetActive(false);
-        else
-            p2SelectionPanel?.SetActive(false);
-    }
+    public void SelectCow()      { SoundManager.Instance?.PlayCowSelectSound(); StartDrag(cowPrefab); }
+    public void SelectFox()      { SoundManager.Instance?.PlayFoxSelectSound(); StartDrag(foxPrefab); }
+    public void SelectTree()     { SoundManager.Instance?.PlayTreeSelectSound(); StartDrag(treePrefab); }
+    public void SelectRock()     { SoundManager.Instance?.PlayRockSelectSound(); StartDrag(rockPrefab); }
+    public void SelectWindmill() { SoundManager.Instance?.PlayWindmillSelectSound(); StartDrag(windmillPrefab); }
 
     void StartDrag(GameObject prefab)
     {
