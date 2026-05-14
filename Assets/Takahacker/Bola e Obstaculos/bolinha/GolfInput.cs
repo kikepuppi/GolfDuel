@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class GolfInput : MonoBehaviour
@@ -92,9 +93,18 @@ public class GolfInput : MonoBehaviour
 
             float distance = Mathf.Clamp(dragVector.magnitude, 0, maxDragDistance);
 
-            Vector2 force = dragVector.normalized * (distance / maxDragDistance) * maxForce;
+            Vector2 direction = ((Vector2)ponta.position - (Vector2)transform.position).normalized;
+            Vector2 force = direction * (distance / maxDragDistance) * maxForce;
+
+            Vector2 ballPos = transform.position;
+            Vector2 pontaPos = ponta.position;
+            Vector2 vec = pontaPos - ballPos;
+            float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+            Vector2 dragDir = dragVector.normalized;
+            float dragAngle = Mathf.Atan2(dragDir.y, dragDir.x) * Mathf.Rad2Deg;
 
             rb.AddForce(force, ForceMode2D.Impulse);
+
             SoundManager.Instance?.PlayShotSound();
             GameManager.Instance?.AddStroke(playerIndex);
 
