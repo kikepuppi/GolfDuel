@@ -35,6 +35,7 @@ public class DragAndPlace : MonoBehaviour
 
     List<ForbiddenZone> allZones = new List<ForbiddenZone>();
     List<ObstacleState> allObstacles = new List<ObstacleState>();
+    SpriteRenderer[] outsideZones;
 
     ContactFilter2D overlapFilter;
 
@@ -42,6 +43,14 @@ public class DragAndPlace : MonoBehaviour
     {
         overlapFilter = ContactFilter2D.noFilter;
         overlapFilter.useTriggers = true;
+
+        var objs = GameObject.FindGameObjectsWithTag("ZoneOutsidePlayable");
+        outsideZones = new SpriteRenderer[objs.Length];
+        for (int i = 0; i < objs.Length; i++)
+            outsideZones[i] = objs[i].GetComponent<SpriteRenderer>();
+
+        foreach (var sr in outsideZones)
+            if (sr != null) sr.enabled = false;
     }
 
     Collider2D ActivePlacementArea()
@@ -146,6 +155,7 @@ public class DragAndPlace : MonoBehaviour
                 currentDrag = null;
                 currentZone = null;
                 currentZoneCol = null;
+                ShowOutsideZones(false);
 
                 GameManager.Instance?.OnObstaclePlaced();
             }
@@ -169,6 +179,12 @@ public class DragAndPlace : MonoBehaviour
     public void SelectRock()     { SoundManager.Instance?.PlayRockSelectSound(); StartDrag(rockPrefab); }
     public void SelectWindmill() { SoundManager.Instance?.PlayWindmillSelectSound(); StartDrag(windmillPrefab); }
 
+    void ShowOutsideZones(bool show)
+    {
+        foreach (var sr in outsideZones)
+            if (sr != null) sr.enabled = show;
+    }
+
     void StartDrag(GameObject prefab)
     {
         if (!IsObstacleSelectionPhase()) return;
@@ -191,6 +207,8 @@ public class DragAndPlace : MonoBehaviour
 
         var state = currentDrag.GetComponent<ObstacleState>();
         if (state != null) state.SetDragging(true);
+
+        ShowOutsideZones(true);
     }
 
     public void ResetAllObstacles()

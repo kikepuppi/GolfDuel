@@ -8,6 +8,7 @@ TagManager:
   - Cow
   - BallStartP1
   - BallStartP2
+  - ZoneOutsidePlayable
   layers:
   - Default
   - TransparentFX
