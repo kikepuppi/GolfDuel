@@ -22,6 +22,7 @@ public class FoxAI : MonoBehaviour
     Animator anim;
     GameObject carriedBall;
     public Transform dropTarget;
+    Vector3 dropPosition;
     bool isCarrying = false;
     bool isMovingToTarget = false;
     bool isExiting = false;
@@ -46,7 +47,7 @@ public class FoxAI : MonoBehaviour
         }
 
         float currentSpeed = isCarrying ? carrySpeed : speed;
-        Vector2 diff = (Vector2)dropTarget.position - (Vector2)transform.position;
+        Vector2 diff = (Vector2)dropPosition - (Vector2)transform.position;
 
         if (Mathf.Abs(diff.x) > 0.05f)
         {
@@ -68,7 +69,7 @@ public class FoxAI : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(dropTarget.position.x, dropTarget.position.y, transform.position.z);
+            transform.position = new Vector3(dropPosition.x, dropPosition.y, transform.position.z);
             isMovingToTarget = false;
             anim.SetBool("IsRunning", false);
             anim.SetFloat("MoveX", 0);
@@ -81,7 +82,7 @@ public class FoxAI : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.CompareTag("Ball")) return;
-        if (col.transform.parent != null) return; // bola est� sendo carregada
+        if (col.transform.parent != null) return; // bola est� sendo carregada
         if (isCarrying || isExiting || pickupCooldown > 0f) return;
 
         StartCoroutine(PickBallWithDelay(col.gameObject));
@@ -105,9 +106,7 @@ public class FoxAI : MonoBehaviour
         carriedBall.transform.localPosition = Vector3.zero;
 
         var golfInput = ball.GetComponent<GolfInput>();
-        string startTag = golfInput.playerIndex == 0 ? "BallStartP1" : "BallStartP2";
-        GameObject startObj = GameObject.FindGameObjectWithTag(startTag);
-        dropTarget = startObj.transform;
+        dropPosition = golfInput.WorldStartPosition;
         isMovingToTarget = true;
     }
 
@@ -116,6 +115,7 @@ public class FoxAI : MonoBehaviour
         if (carriedBall == null) return;
 
         carriedBall.transform.SetParent(null);
+        carriedBall.transform.position = dropPosition; // posição fixa em mundo, não scrollada com a lane
 
         var rb = carriedBall.GetComponent<Rigidbody2D>();
         rb.simulated = true;
