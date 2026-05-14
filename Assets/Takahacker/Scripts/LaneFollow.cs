@@ -5,9 +5,11 @@ public class LaneFollow : MonoBehaviour
     public Transform ball;
 
     float oldBallY;
+    Vector3 initialPosition;
 
     private void Start()
     {
+        initialPosition = transform.position;
         oldBallY = ball.position.y;
     }
 
@@ -18,7 +20,18 @@ public class LaneFollow : MonoBehaviour
         float delta = ball.position.y - oldBallY;
 
         Vector3 pos = transform.position;
-        transform.position -= Vector3.up * delta;
+        pos.y = Mathf.Min(pos.y - delta, initialPosition.y);
+        transform.position = pos;
         oldBallY = ball.position.y;
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = initialPosition;
+    }
+
+    public void SyncBallY()
+    {
+        if (ball != null) oldBallY = ball.position.y;
     }
 }

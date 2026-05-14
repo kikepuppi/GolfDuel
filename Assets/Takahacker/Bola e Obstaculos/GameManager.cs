@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public Transform p1BallStart;
     public Transform p2BallStart;
     public DragAndPlace dragAndPlace;
+    public LaneFollow[] laneFollows;
 
     [Header("Rounds")]
     public int totalRounds = 18;
@@ -149,16 +150,27 @@ public class GameManager : MonoBehaviour
         currentRound++;
         UpdateScoreUI();
 
-        if (p1Ball != null && p1BallStart != null)
-            p1Ball.ResetForNewRound(p1BallStart.position);
-        if (p2Ball != null && p2BallStart != null)
-            p2Ball.ResetForNewRound(p2BallStart.position);
         if (dragAndPlace != null)
             dragAndPlace.ResetAllObstacles();
 
         p1Finished = false;
         p2Finished = false;
+
+        // 1. Reset lane positions so p1BallStart/p2BallStart world positions are correct
         if (gameCamera != null) gameCamera.ResetPosition();
+        if (laneFollows != null)
+            foreach (var lane in laneFollows) lane?.ResetPosition();
+
+        // 2. Reset balls using now-correct start positions
+        if (p1Ball != null && p1BallStart != null)
+            p1Ball.ResetForNewRound(p1BallStart.position);
+        if (p2Ball != null && p2BallStart != null)
+            p2Ball.ResetForNewRound(p2BallStart.position);
+
+        // 3. Sync oldBallY after ball reposition to avoid huge delta in next LateUpdate
+        if (laneFollows != null)
+            foreach (var lane in laneFollows) lane?.SyncBallY();
+
         SetPhase(GamePhase.P1ObstacleSelection);
     }
 

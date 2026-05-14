@@ -28,11 +28,14 @@ public class GolfInput : MonoBehaviour
 
     float[] pontaY = new float[] { 1.4f, 2.1f, 2.8f, 3.5f, 4.2f };
 
+    public Vector3 WorldStartPosition { get; private set; }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         arrow.gameObject.SetActive(false);
+        WorldStartPosition = transform.position;
     }
 
     public void SetFinished()
@@ -217,6 +220,7 @@ public class GolfInput : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
+        WorldStartPosition = startPosition;
         transform.position = startPosition;
 
         if (col != null) col.enabled = true;
