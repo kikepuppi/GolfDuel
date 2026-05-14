@@ -26,15 +26,21 @@ public class CameraFollow : MonoBehaviour
     [Header("Reset Position")]
     public float resetY = 0f;
 
+    bool isPaused = false;
 
     void Start()
     {
         fixedX = transform.position.x;
         fixedZ = transform.position.z;
     }
+    
+    public void SetPaused(bool paused) {
+        isPaused = paused;
+    }
 
     void LateUpdate()
     {
+    	if (isPaused) return;
         Vector3 pos = transform.position;
         pos.x = fixedX;
         pos.z = fixedZ;
