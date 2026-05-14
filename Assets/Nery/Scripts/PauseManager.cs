@@ -8,6 +8,7 @@ public class PauseManager : MonoBehaviour
     public GameObject pausePanel;
     public Button resumeButton;
     public Button menuButton;
+    public CameraFollow cameraFollow;
 
     bool isPaused = false;
 
@@ -27,11 +28,13 @@ public class PauseManager : MonoBehaviour
     public void Pausar() {
         isPaused = true;
         pausePanel.SetActive(true);
+        cameraFollow.SetPaused(true);
     }
 
     public void Retomar() {
         isPaused = false;
         pausePanel.SetActive(false);
+        cameraFollow.SetPaused(false);
     }
 
     public void VoltarAoMenu() {
