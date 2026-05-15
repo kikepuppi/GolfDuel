@@ -188,7 +188,10 @@ public class GameManager : MonoBehaviour
         {
             case GamePhase.P1ObstacleSelection: onP1ObstacleSelectionStart?.Invoke(); break;
             case GamePhase.P2ObstacleSelection: onP2ObstacleSelectionStart?.Invoke(); break;
-            case GamePhase.P1Turn:              onP1TurnStart?.Invoke();              break;
+            case GamePhase.P1Turn:
+                if (gameCamera != null) gameCamera.ResetPosition();
+                onP1TurnStart?.Invoke();
+                break;
             case GamePhase.P2Turn:              onP2TurnStart?.Invoke();              break;
             case GamePhase.GameOver:            onGameOver?.Invoke();                 break;
         }
